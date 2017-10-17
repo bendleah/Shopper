@@ -10,7 +10,7 @@
 		{
 			"name": "Get all availible products",
 			"request": {
-				"url": "",
+				"url": "{{api_endpoint}}/products",
 				"method": "GET",
 				"header": [],
 				"body": {},
@@ -20,6 +20,18 @@
 		},
 		{
 			"name": "Create a new basket",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"basketId\", jsonData.id);"
+						]
+					}
+				}
+			],
 			"request": {
 				"url": "{{api_endpoint}}/baskets",
 				"method": "POST",
@@ -32,7 +44,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\tuserId:{{$guid}}\n}"
+					"raw": "{\n\"ownerId\":\t\"{{$guid}}\"\n}\n"
 				},
 				"description": ""
 			},
@@ -74,7 +86,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"productId\" : \"4a739ec8-81a2-4247-8098-eca377cc4de5\" ,\n\t\"quantity\" : \"5\"\n}"
+					"raw": "{\n\t\"productId\" : \"{{productId}}\" ,\n\t\"quantity\" : \"12\"\n}"
 				},
 				"description": ""
 			},
@@ -83,7 +95,7 @@
 		{
 			"name": "Get all basket order lines",
 			"request": {
-				"url": "{{api_endpoint}}/baskets/{{basketId}}/items",
+				"url": "{{api_endpoint}}/baskets/{{basketId}}/orderlines",
 				"method": "GET",
 				"header": [],
 				"body": {},
@@ -113,19 +125,19 @@
 		},
 		{
 			"name": "Clear a basket",
-			"request": {
-				"url": "{{api_endpoint}}/baskets/{{basketId}}/clear",
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
-			},
+      "request": {
+        "url": "{{api_endpoint}}/baskets/{{basketId}}/clear",
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "description": ""
+          }
+        ],
+        "body": {},
+        "description": ""
+      },
 			"response": []
 		},
 		{
