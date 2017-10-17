@@ -1,0 +1,143 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Shopper",
+		"_postman_id": "fcbf1307-815a-63fb-08e8-9b6264ad7126",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all availible products",
+			"request": {
+				"url": "",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new basket",
+			"request": {
+				"url": "{{api_endpoint}}/baskets",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\tuserId:{{$guid}}\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all baskets",
+			"request": {
+				"url": "{{api_endpoint}}/baskets",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get a specific basket",
+			"request": {
+				"url": "{{api_endpoint}}/baskets/{{basketId}}",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new order line",
+			"request": {
+				"url": "{{api_endpoint}}/baskets/{{basketId}}/orderlines",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"productId\" : \"4a739ec8-81a2-4247-8098-eca377cc4de5\" ,\n\t\"quantity\" : \"5\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get all basket order lines",
+			"request": {
+				"url": "{{api_endpoint}}/baskets/{{basketId}}/items",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update the quantity of an order line",
+			"request": {
+				"url": "{{api_endpoint}}/baskets/{{basketId}}/orderlines/{{productId}}",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n\t[\n\t\t{\"op\" : \"replace\", \"path\" : \"/quantity\", \"value\" : \"15\"}\n\t]\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Clear a basket",
+			"request": {
+				"url": "{{api_endpoint}}/baskets/{{basketId}}/clear",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a basket",
+			"request": {
+				"url": "{{api_endpoint}}/baskets/{{basketId}}",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
