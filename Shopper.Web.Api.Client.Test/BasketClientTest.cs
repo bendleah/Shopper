@@ -165,45 +165,5 @@ namespace Shopper.Web.Api.Client.Test
             _server.Dispose();
         }
 
-
-        private void SeedBasketStore(IDataStore<Api.Models.Basket> basketStore, IDataStore<Api.Models.Product> productStore)
-        {
-            var product1 = productStore.Get(new Guid("3f994e1b-fdf9-48a5-8d8c-e8c3fc9b8f0a"));
-            var product2 = productStore.Get(new Guid("4a739ec8-81a2-4247-8098-eca377cc4de5"));
-
-            basketStore.TryAdd(new Api.Models.Basket()
-            {
-                Id = _testBasketId,
-                CreatedDate = DateTime.UtcNow,
-                OrderLines = new Dictionary<Guid, Api.Models.OrderLine>()
-                {
-                    {
-                        product1.Id ,
-                        new Api.Models.OrderLine()
-                        {
-                            Product =  product1,
-                            Quantity = 5
-                        }
-                    } ,
-                    {
-                        product2.Id ,
-                        new Api.Models.OrderLine()
-                        {
-                            Product = product2 ,
-                            Quantity = 8
-                        }
-                    }
-                },
-                OwnerId = new Guid("c197b8dc-274a-40a7-a843-bba68d4cec3f")
-            });
-
-            basketStore.TryAdd(new Api.Models.Basket()
-            {
-                Id = new Guid("06847481-4e76-48d1-95d1-e054c846dbff"),
-                CreatedDate = DateTime.UtcNow,
-                OrderLines = new Dictionary<Guid, Api.Models.OrderLine>(),
-                OwnerId = new Guid("6f2fe249-a24d-4f9f-9132-1bf2d5a406fc")
-            });
-        }
     }
 }
