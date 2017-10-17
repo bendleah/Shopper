@@ -8,10 +8,12 @@ namespace Shopper.Web.Api.Client
     public class ShopperApiClient : IShopperApiClient
     {
         public IBasketClient Baskets  { get; }
+        public IProductClient Products { get; }
         public ShopperApiClient(ApiSettings apiSettings)
         {
             var factory = new ShopperHttpClientFactory(apiSettings);
             Baskets = new BasketClient(factory);
+            Products = new ProductClient(factory);
         }
     }
 }

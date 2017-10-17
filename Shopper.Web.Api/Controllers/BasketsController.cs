@@ -43,7 +43,7 @@ namespace Shopper.Web.Api.Controllers
         [HttpGet("{id:guid}", Name = "GetBasketById")]
         public IActionResult GetBasketById(Guid id)
         {
-            if (!_baskets.Contains(id)) return NotFound();
+            if (!_baskets.Contains(id)) return NotFound(id);
 
             return Ok(_mapper.Map<BasketDto>(_baskets.Get(id)));
         }
@@ -54,7 +54,7 @@ namespace Shopper.Web.Api.Controllers
         [HttpDelete("{id:guid}", Name = "DeleteBasketById")]
         public IActionResult DeleteBasketById(Guid id)
         {
-            if (!_baskets.Contains(id)) return NotFound();
+            if (!_baskets.Contains(id)) return NotFound(id);
 
             if (!_baskets.Remove(id)) return new BadRequestResult();
 
@@ -62,7 +62,7 @@ namespace Shopper.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Get all items for a given basket 
+        /// Get all order lines for a given basket 
         /// </summary>
         [HttpGet("{id:guid}/orderlines", Name = "GetBasketOrderLines")]
         public IActionResult GetBasketOrderLines(Guid id)
@@ -74,7 +74,9 @@ namespace Shopper.Web.Api.Controllers
             return Ok(_mapper.Map<IEnumerable<OrderLineDto>>(orderlines));
         }
 
-        //Get an order line for a given basket
+        /// <summary>
+        /// Get an order line for a given basket
+        /// </summary>
         [HttpGet("{id:guid}/orderlines/{productId:guid}", Name = "GetBasketOrderLine")]
         public IActionResult GetBasketOrderLine(Guid id, Guid productId)
         {
@@ -110,8 +112,10 @@ namespace Shopper.Web.Api.Controllers
             //Check to see if we already have an orderline for this product
             if (basket.OrderLines.ContainsKey(model.ProductId))
             {
-                //Add the new order line quantity to the existing order line
+                //If we already have an orderline for this product, add the new quantity to the existing order line
                 basket.OrderLines[model.ProductId].Quantity += orderLine.Quantity;
+                //return the updated orderline
+                orderLine = basket.OrderLines[model.ProductId];
             }
             else
             {

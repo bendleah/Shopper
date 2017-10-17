@@ -29,7 +29,7 @@ namespace Shopper.Web.Api.Client.Test
             var basketStore = (IDataStore<Api.Models.Basket>)_server.Services.GetService(typeof(IDataStore<Api.Models.Basket>));
             var productStore = (IDataStore<Api.Models.Product>)_server.Services.GetService(typeof(IDataStore<Api.Models.Product>));
 
-            SeedBasketStore(basketStore, productStore);
+            basketStore.Seed(productStore);
 
             _server.Start();
             _client = new ShopperApiClient(new ApiSettings(new Uri(uri)));

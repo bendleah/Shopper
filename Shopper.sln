@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopper.Web.Api.Client", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopper.Web.Api.Client.Test", "Shopper.Web.Api.Client.Test\Shopper.Web.Api.Client.Test.csproj", "{9C59FB0E-B2EA-45BB-91AD-4DFD7A0DC984}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{BB0C507F-1EE1-4239-993F-957352716C10}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Desktop\Shopper.postman_collection.json = ..\..\..\..\Desktop\Shopper.postman_collection.json
+		..\..\..\..\Desktop\Shopper.postman_environment.json = ..\..\..\..\Desktop\Shopper.postman_environment.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
