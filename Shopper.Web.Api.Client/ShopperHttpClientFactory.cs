@@ -16,13 +16,8 @@ namespace Shopper.Web.Api.Client
         }
 
         public HttpClient CreateHttpClient()
-        {
-            var httpClientHandler = new HttpClientHandler
-            {
-                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-            };
-
-            var httpClient = new HttpClient(httpClientHandler)
+        {  
+            var httpClient = new HttpClient()
             {
                 BaseAddress = _settings.BaseUri
             };

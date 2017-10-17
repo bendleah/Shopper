@@ -34,7 +34,7 @@ namespace Shopper.Web.Api.Controllers
         [HttpGet(Name = "GetAllBaskets")]
         public IActionResult GetAllBaskets()
         {
-            return Ok(_mapper.Map<List<BasketDto>>(_baskets.ToList()));
+            return Ok(_mapper.Map<List<BasketDto>>(_baskets.GetAll()));
         }
 
         /// <summary>
@@ -46,6 +46,19 @@ namespace Shopper.Web.Api.Controllers
             if (!_baskets.Contains(id)) return NotFound();
 
             return Ok(_mapper.Map<BasketDto>(_baskets.Get(id)));
+        }
+
+        /// <summary>
+        /// Delete a basket by id
+        /// </summary>
+        [HttpDelete("{id:guid}", Name = "DeleteBasketById")]
+        public IActionResult DeleteBasketById(Guid id)
+        {
+            if (!_baskets.Contains(id)) return NotFound();
+
+            if (!_baskets.Remove(id)) return new BadRequestResult();
+
+            return Ok();
         }
 
         /// <summary>
@@ -97,7 +110,8 @@ namespace Shopper.Web.Api.Controllers
             //Check to see if we already have an orderline for this product
             if (basket.OrderLines.ContainsKey(model.ProductId))
             {
-                basket.OrderLines[model.ProductId].Quantity = orderLine.Quantity;
+                //Add the new order line quantity to the existing order line
+                basket.OrderLines[model.ProductId].Quantity += orderLine.Quantity;
             }
             else
             {
@@ -160,8 +174,8 @@ namespace Shopper.Web.Api.Controllers
 
             basket.OrderLines.Clear();
 
-            return Ok();
-        }
+            return Ok(_mapper.Map<BasketDto>(basket));
+        }       
 
         /// <summary>
         /// Create a basket for a given user

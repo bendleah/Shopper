@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shopper.Web.Api.Client.Clients;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

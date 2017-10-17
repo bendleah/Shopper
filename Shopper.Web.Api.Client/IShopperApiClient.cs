@@ -1,4 +1,6 @@
-﻿namespace Shopper.Web.Api.Client
+﻿using Shopper.Web.Api.Client.Clients;
+
+namespace Shopper.Web.Api.Client
 {
     public interface IShopperApiClient
     {

@@ -28,7 +28,7 @@ namespace Shopper.Web.Api.Controllers
         [HttpGet(Name = "GetAllProducts")]
         public IActionResult GetAll()
         {
-            return Ok(_mapper.Map<IEnumerable<ProductDto>>(_products.ToList()));
+            return Ok(_mapper.Map<IEnumerable<ProductDto>>(_products.GetAll()));
         }
 
         /// <summary>

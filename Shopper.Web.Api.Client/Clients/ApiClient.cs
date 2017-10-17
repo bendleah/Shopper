@@ -39,9 +39,23 @@ namespace Shopper.Web.Api.Client.Clients
             return await GetApiResponse<T, U>(requestUri, content, "POST");
         }
 
-        public async Task<ApiResponse<T>> HttpDeleteAsync<T>(Uri requestUri)
+        public async Task<ApiResponse> HttpDeleteAsync(Uri requestUri)
         {
-            return await GetApiResponse<T>(requestUri, "DELETE");
+            return await GetApiResponse(requestUri, "DELETE");
+        }
+
+        private async Task<ApiResponse> GetApiResponse(Uri requestUri, string httpVerb)
+        {
+            using (var httpClient = _httpClientFactory.CreateHttpClient())
+            {
+                httpClient.Timeout = new TimeSpan(0, 0, 30);
+
+                var request = new HttpRequestMessage(new HttpMethod(httpVerb), requestUri);
+
+                var response = await httpClient.SendAsync(request).ConfigureAwait(false);
+
+                return await FormatResponse(response);
+            }
         }
 
         private async Task<ApiResponse<T>> GetApiResponse<T>(Uri requestUri, string httpVerb)
@@ -65,7 +79,6 @@ namespace Shopper.Web.Api.Client.Clients
                 httpClient.Timeout = new TimeSpan(0, 0, 30);
 
                 var request = new HttpRequestMessage(new HttpMethod(httpVerb), requestUri);
-                request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
                 request.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
 
@@ -73,6 +86,18 @@ namespace Shopper.Web.Api.Client.Clients
 
                 return await FormatResponse<T>(response);
             }
+        }
+
+        private async Task<ApiResponse> FormatResponse(HttpResponseMessage httpResponse)
+        {
+            var apiResponse = new ApiResponse()
+            {
+                StatusCode = httpResponse.StatusCode,
+                Reason = httpResponse.ReasonPhrase,
+                Success = httpResponse.IsSuccessStatusCode
+            };
+
+            return apiResponse;
         }
 
         private async Task<ApiResponse<T>> FormatResponse<T>(HttpResponseMessage httpResponse)
@@ -109,4 +134,4 @@ namespace Shopper.Web.Api.Client.Clients
         }
     }
 }
-}
+
